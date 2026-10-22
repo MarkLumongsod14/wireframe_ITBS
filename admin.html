@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Console - ComLab Tracker & Reserve</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .sidebar-link.active { background: #172554; color: #fff; box-shadow: inset 3px 0 #2dd4bf; }
+    .sidebar-link.active i { color: #2dd4bf; }
+    .section-panel { animation: panel-in .2s ease-out; }
+    @keyframes panel-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    @media (min-width: 1024px) { #sidebar { transform: translateX(0); } #workspace-content { padding-left: 16rem; } }
+    @media (max-width: 1023px) { #workspace-content { padding-left: 0; } }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen">
+  <div class="min-h-screen flex">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-blue-950 text-slate-300 transform -translate-x-full lg:translate-x-0 transition-transform duration-200 flex flex-col">
+      <div class="h-20 px-6 flex items-center gap-3 border-b border-blue-900">
+        <div class="w-10 h-10 rounded-xl bg-teal-400 text-blue-950 flex items-center justify-center"><i class="fa-solid fa-desktop text-lg"></i></div>
+        <div><p class="text-white font-bold leading-tight">ComLab Tracker</p><p class="text-blue-300 text-[10px] uppercase tracking-widest">Admin Console</p></div>
+      </div>
+      <nav class="p-4 space-y-1 flex-1">
+        <p class="px-3 pt-2 pb-3 text-[10px] font-bold uppercase tracking-widest text-blue-400">Workspace</p>
+        <button data-section="overview" class="sidebar-link active w-full text-left flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-semibold hover:bg-blue-900 transition"><i class="fa-solid fa-chart-pie w-5 text-slate-400"></i>Overview</button>
+        <button data-section="reservations" class="sidebar-link w-full text-left flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-semibold hover:bg-blue-900 transition"><i class="fa-solid fa-calendar-check w-5 text-slate-400"></i>Reservations <span class="ml-auto bg-amber-400 text-blue-950 text-[10px] px-1.5 py-0.5 rounded-full">0</span></button>
+        <button data-section="labs" class="sidebar-link w-full text-left flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-semibold hover:bg-blue-900 transition"><i class="fa-solid fa-building w-5 text-slate-400"></i>Labs & Workstations</button>
+        <button data-section="users" class="sidebar-link w-full text-left flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-semibold hover:bg-blue-900 transition"><i class="fa-solid fa-users w-5 text-slate-400"></i>Students</button>
+        <p class="px-3 pt-7 pb-3 text-[10px] font-bold uppercase tracking-widest text-blue-400">System</p>
+        <button data-section="settings" class="sidebar-link w-full text-left flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-semibold hover:bg-blue-900 transition"><i class="fa-solid fa-gear w-5 text-slate-400"></i>Settings</button>
+      </nav>
+      <div class="p-4 border-t border-blue-900 space-y-1"><a href="index.html" class="flex items-center gap-3 px-3 py-2 text-sm text-blue-300 hover:text-white transition"><i class="fa-solid fa-arrow-left w-5"></i>Back to student portal</a><a href="problemstatement.html" class="block px-3 py-1 text-xs text-blue-300 hover:text-white">Problem statement</a><a href="user-flow.html" class="block px-3 py-1 text-xs text-blue-300 hover:text-white">User flow</a></div>
+    </aside>
+    <div id="scrim" class="fixed inset-0 z-30 bg-blue-950/50 hidden lg:hidden"></div>
+    <div id="workspace-content" class="lg:pl-64 flex-1 min-w-0">
+      <header class="h-20 bg-white border-b border-slate-200 px-4 sm:px-8 flex items-center justify-between sticky top-0 z-20">
+        <div class="flex items-center gap-3"><button id="menu-button" class="lg:hidden text-slate-600 text-xl p-2" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button><div><p id="current-date" class="text-xs text-slate-500"></p><h1 id="page-title" class="text-lg sm:text-xl font-bold text-blue-950">Operations overview</h1></div></div>
+        <button class="relative text-slate-500 hover:text-blue-900" aria-label="Notifications"><i class="fa-regular fa-bell text-lg"></i></button>
+      </header>
+      <main class="p-4 sm:p-8 max-w-[1500px] mx-auto">
+        <section id="overview" class="section-panel space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3"><div><p class="text-teal-600 text-xs font-bold uppercase tracking-wider">Live operations</p><h2 class="text-2xl font-bold text-blue-950 mt-1">Operations overview</h2><p class="text-sm text-slate-500 mt-1">Current workstation availability and reservation activity.</p></div><button data-action="refresh" class="border border-slate-300 bg-white text-slate-700 rounded-lg px-4 py-2 text-sm font-semibold hover:bg-slate-50 flex items-center gap-2"><i class="fa-solid fa-rotate-right"></i>Refresh data</button></div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div class="bg-white border border-slate-200 rounded-xl p-5"><span class="text-sm text-slate-500">Active reservations</span><p class="text-3xl font-bold text-blue-950 mt-4">0</p></div>
+            <div class="bg-white border border-slate-200 rounded-xl p-5"><span class="text-sm text-slate-500">Currently occupied</span><p class="text-3xl font-bold text-blue-950 mt-4">0 / 0</p></div>
+            <div class="bg-white border border-slate-200 rounded-xl p-5"><span class="text-sm text-slate-500">Available workstations</span><p class="text-3xl font-bold text-blue-950 mt-4">0</p></div>
+            <div class="bg-white border border-slate-200 rounded-xl p-5"><span class="text-sm text-slate-500">Pending actions</span><p class="text-3xl font-bold text-blue-950 mt-4">0</p></div>
+          </div>
+          <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+            <div class="xl:col-span-2 bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden"><div class="p-5 border-b border-slate-200 flex justify-between items-center"><div><h3 class="font-bold text-blue-950">Recent reservations</h3><p class="text-xs text-slate-500 mt-1">Latest activity from students</p></div><button data-section-link="reservations" class="text-xs font-bold text-blue-800 hover:underline">View all <i class="fa-solid fa-arrow-right ml-1"></i></button></div><div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead class="bg-slate-50 text-[11px] uppercase text-slate-500"><tr><th class="px-5 py-3">Student</th><th class="px-5 py-3">Laboratory</th><th class="px-5 py-3">Slot</th><th class="px-5 py-3">Status</th></tr></thead><tbody class="divide-y divide-slate-100"></tbody></table></div></div>
+            <div class="bg-white border border-slate-200 rounded-xl shadow-sm"><div class="p-5 border-b border-slate-200"><h3 class="font-bold text-blue-950">Lab status</h3><p class="text-xs text-slate-500 mt-1">Live workstation availability</p></div><div class="p-5 space-y-5"></div></div>
+          </div>
+        </section>
+        <section id="reservations" class="section-panel hidden space-y-6"><div><p class="text-teal-600 text-xs font-bold uppercase tracking-wider">Booking management</p><h2 class="text-2xl font-bold text-blue-950 mt-1">Reservations</h2><p class="text-sm text-slate-500 mt-1">Review, filter, and manage student workstation bookings.</p></div><div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden"><div class="p-4 border-b border-slate-200 flex flex-col md:flex-row gap-3 justify-between"><input id="reservation-search" type="search" placeholder="Search student, lab, or reservation ID" class="w-full md:max-w-md border border-slate-300 rounded-lg px-3 py-2 text-sm"><select id="status-filter" class="border border-slate-300 rounded-lg px-3 py-2 text-sm"><option value="all">All statuses</option><option value="active">Active</option><option value="reserved">Reserved</option><option value="pending">Pending</option><option value="cancelled">Cancelled</option></select></div><div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead class="bg-slate-50 text-[11px] uppercase text-slate-500"><tr><th class="px-5 py-3">Reference</th><th class="px-5 py-3">Student</th><th class="px-5 py-3">Lab / PC</th><th class="px-5 py-3">Schedule</th><th class="px-5 py-3">Status</th><th class="px-5 py-3 text-right">Action</th></tr></thead><tbody id="reservation-list" class="divide-y divide-slate-100"></tbody></table></div><div id="empty-results" class="hidden p-10 text-center text-slate-500 text-sm">No reservations match your search.</div></div></section>
+        <section id="labs" class="section-panel hidden space-y-6"><div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3"><div><p class="text-teal-600 text-xs font-bold uppercase tracking-wider">Resource management</p><h2 class="text-2xl font-bold text-blue-950 mt-1">Labs & workstations</h2><p class="text-sm text-slate-500 mt-1">Monitor room capacity and flag machines that need attention.</p></div><button class="bg-blue-900 text-white rounded-lg px-4 py-2 text-sm font-bold hover:bg-blue-800"><i class="fa-solid fa-plus mr-2"></i>Add laboratory</button></div><div id="lab-list" class="grid grid-cols-1 xl:grid-cols-3 gap-5"></div></section>
+        <section id="users" class="section-panel hidden space-y-6"><div><p class="text-teal-600 text-xs font-bold uppercase tracking-wider">Account management</p><h2 class="text-2xl font-bold text-blue-950 mt-1">Students</h2></div></section>
+        <section id="settings" class="section-panel hidden space-y-6"><div><p class="text-teal-600 text-xs font-bold uppercase tracking-wider">System configuration</p><h2 class="text-2xl font-bold text-blue-950 mt-1">Settings</h2><p class="text-sm text-slate-500 mt-1">Control reservation rules and administrator preferences.</p></div><div class="bg-white border border-slate-200 rounded-xl shadow-sm divide-y divide-slate-100"><div class="p-5 flex items-center justify-between gap-4"><div><h3 class="font-bold text-slate-800">Allow same-day reservations</h3><p class="text-sm text-slate-500 mt-1">Students can reserve an available PC until the session begins.</p></div><input type="checkbox" checked aria-label="Allow same-day reservations" class="h-5 w-5 accent-teal-600"></div><div class="p-5 flex items-center justify-between gap-4"><div><h3 class="font-bold text-slate-800">Automatic expiry</h3><p class="text-sm text-slate-500 mt-1">Release a workstation when a student does not check in after 15 minutes.</p></div><input type="checkbox" checked aria-label="Automatic expiry" class="h-5 w-5 accent-teal-600"></div><div class="p-5 flex items-center justify-between gap-4"><div><h3 class="font-bold text-slate-800">Maintenance alerts</h3><p class="text-sm text-slate-500 mt-1">Notify administrators when a workstation is reported offline.</p></div><input type="checkbox" checked aria-label="Maintenance alerts" class="h-5 w-5 accent-teal-600"></div></div></section>
+      </main>
+    </div>
+  </div>
+  <dialog id="admin-dialog" class="w-[min(92vw,30rem)] rounded-xl p-0 shadow-2xl backdrop:bg-blue-950/50">
+    <form id="admin-dialog-form" class="bg-white p-6 space-y-5">
+      <div class="flex items-center justify-between gap-4"><h2 id="dialog-title" class="text-xl font-bold text-blue-950"></h2><button type="button" id="dialog-close" class="text-slate-500 hover:text-slate-900" aria-label="Close dialog"><i class="fa-solid fa-xmark"></i></button></div>
+      <div id="dialog-fields" class="space-y-4"></div>
+      <p id="dialog-error" class="hidden text-sm text-rose-600" role="alert"></p>
+      <div class="flex justify-end gap-2"><button type="button" id="dialog-cancel" class="border border-slate-300 rounded-lg px-4 py-2 text-sm font-semibold">Cancel</button><button type="submit" class="bg-blue-900 hover:bg-blue-800 text-white rounded-lg px-4 py-2 text-sm font-bold">Save</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="fixed bottom-5 right-5 z-50 translate-y-20 opacity-0 transition-all duration-300 bg-blue-950 text-white px-4 py-3 rounded-lg shadow-xl text-sm"><i class="fa-solid fa-circle-check text-teal-300 mr-2"></i><span></span></div>
+  <script src="comlab.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
